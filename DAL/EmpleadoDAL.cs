@@ -7,12 +7,22 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
+    /// <summary>
+    /// Clase que disponibiliza las acciones que consideren la consulta o manipulación de la base de datos
+    /// </summary>
     public class EmpleadoDAL
     {
+        /// <summary>
+        /// Guarda un nuevo registro de empleado en la base de datos, dando formato 
+        /// a la fecha de nacimiento para ser compatible con el formato compatible 
+        /// de la base de datos
+        /// </summary>
+        /// <param name="empleado">Objeto de clase empleado a registrar</param>
+        /// <returns>Retorna un bool para indicar si el proceso es exitoso</returns>
         public bool GuardarEmpleado(Empleado empleado)
         {
             string fechanac = empleado.FechaNacimiento.ToString("yyyy-MM-dd");
-            string query = $"INSERT INTO empleado(nombre, apellido, fechanacimiento, departamento, salario) VALUES ('{empleado.Nombre}', '{empleado.Apellido}', '{fechanac}', {empleado.Departamento}, {empleado.Salario})";
+            string query = $"INSERT INTO empleados(nombre, apellido, fechanacimiento, departamento, salario) VALUES ('{empleado.Nombre}', '{empleado.Apellido}', '{fechanac}', '{empleado.Departamento}', {empleado.Salario})";
             int rows = DatabaseHelper.Instance.ExecuteNonQuery(query);
             if (rows == 0)
             {
@@ -20,10 +30,13 @@ namespace DAL
             }
             return true;
         }
-
+        /// <summary>
+        /// Ejecuta la consulta de todos los empleados registrados en base de datos
+        /// </summary>
+        /// <returns>Retorna una lista con todos lo registros de empleado obtenidos</returns>
         public List<Empleado> ObtenerEmpleados()
         {
-            string query = "SELECT * FROM empleado";
+            string query = "SELECT * FROM empleados";
             DataTable dt = DatabaseHelper.Instance.ExecuteQuery(query);
             List<Empleado> empleados = new List<Empleado>();
             foreach (DataRow row in dt.Rows)
@@ -37,17 +50,6 @@ namespace DAL
                 empleados.Add(e);
             }
             return empleados;
-        }
-
-        public bool EliminarEmpleado(int id)
-        {
-            string query = $"DELETE FROM empleado WHERE id = '{id}'";
-            int rows = DatabaseHelper.Instance.ExecuteNonQuery(query);
-            if (rows == 0)
-            {
-                return false;
-            }
-            return true;
         }
     }
 }

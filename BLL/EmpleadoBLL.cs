@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
+    /// <summary>
+    /// Clase que gestiona las funcionalidades de la aplicación.
+    /// Utilizada para acceder a las acciones disponibles por la capa de acceso a datos
+    /// </summary>
     public class EmpleadoBLL
     {
         private EmpleadoDAL empleadoDAL;
@@ -16,6 +20,12 @@ namespace BLL
             empleadoDAL = new EmpleadoDAL();
         }
 
+        /// <summary>
+        /// Ingresa un nuevo registro de empleado a la base de datos solo si 
+        /// la combinación de nombre y apellido ya no se encuentra registrada 
+        /// en la misma base de datos
+        /// </summary>
+        /// <param name="empleado">Objeto de clase Empleado a registrar</param>
         public void AgregarEmpleado(Empleado empleado)
         {
             empleado.Nombre = empleado.Nombre.Trim();
@@ -31,6 +41,10 @@ namespace BLL
             }
         }
 
+        /// <summary>
+        /// Método para consultar la lista completa de registros de empleados
+        /// </summary>
+        /// <returns>lista de objetos de clase Empleado</returns>
         public List<Empleado> ObtenerEmpleados()
         {
             return empleadoDAL.ObtenerEmpleados();
