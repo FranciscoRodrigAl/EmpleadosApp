@@ -85,13 +85,13 @@ namespace UI
             valido = empleado.Departamento.Trim().Length > 0 && empleado.Departamento.Trim().Length <= 50;
             if (!valido)
             {
-                MessageBox.Show("El departament del empleado debe tener entre 1 a cincuenta carácteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El departamento del empleado debe tener entre 1 a cincuenta carácteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            valido = empleado.FechaNacimiento != DateTime.Today;
+            valido = empleado.FechaNacimiento < DateTime.Today;
             if (!valido)
             {
-                MessageBox.Show("La fecha de nacimiento no puede ser el día de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("La fecha de nacimiento no puede ser igual o mayor al día de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             valido = empleado.Salario > 0;
